@@ -1,0 +1,14 @@
+{
+  "name": "redissor",
+  "version": "0.0.1",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "start": "node index.js"
+  },
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "redis": "2.8.0"
+  }
+}
