@@ -1,6 +1,6 @@
 {
   "name": "redissor",
-  "version": "0.0.1",
+  "version": "0.0.2",
   "description": "",
   "main": "index.js",
   "scripts": {
@@ -9,6 +9,7 @@
   "author": "",
   "license": "ISC",
   "dependencies": {
+    "amqplib": "0.5.2",
     "pg": "6.4.2",
     "redis": "2.8.0",
     "sequelize": "3.30.4"
