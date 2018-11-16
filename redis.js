@@ -1,6 +1,8 @@
 const redis = require('redis');
 
 async function test(redisUrl) {
+    console.log('Testing redis');
+
     return new Promise((resolve, reject) => {
         console.log(`Connecting to redis at ${redisUrl}`);
 
