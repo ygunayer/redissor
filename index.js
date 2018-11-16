@@ -1,6 +1,13 @@
 const redisURL = process.env.REDIS_URL || 'redis://localhost:6379';
-const psqlURL = process.env.PSQL_URL || 'postgres://localhost/signalive-dev';
 const rabbitURL = process.env.RABBIT_URL || 'amqp://localhost';
+
+const psqlConfig = {
+    host: process.env.POSTGRES_HOST || 'localhost',
+    username: process.env.POSTGRES_DB_USER || 'postgres',
+    password: process.env.POSTGRES_DB_PASSWORD || 'postgres',
+    database: process.env.POSTGRES_DB_NAME || 'signalive-dev',
+    port: isNaN(process.env.POSTGRES_DB_PORT) ? 5432 : parseInt(process.env.POSTGRES_DB_PORT),
+};
 
 const testRedis = require('./redis');
 const testPsql = require('./psql');
@@ -25,7 +32,7 @@ if (!process.env.DISABLE_REDIS)
     watch('Redis', () => testRedis(redisURL));
 
 if (!process.env.DISABLE_PSQL)
-    watch('Postgres', () => testPsql(psqlURL));
+    watch('Postgres', () => testPsql(psqlConfig));
 
 if (!process.env.DISABLE_RABBIT)
     watch('RabbitMQ', () => testRabbit(rabbitURL));
