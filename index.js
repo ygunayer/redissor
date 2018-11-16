@@ -6,23 +6,26 @@ const testRedis = require('./redis');
 const testPsql = require('./psql');
 const testRabbit = require('./rabbit');
 
-const tests = [];
+async function watch(name, doTest, interval = 3000) {
+    async function tick() {
+        try {
+            await doTest();
+            console.log(`${name} connection is OK`);
+        } catch (err) {
+            console.error(`${name} connection failed due to`, err);
+        } finally {
+            setTimeout(tick, interval);
+        }
+    }
+
+    tick();
+}
 
 if (!process.env.DISABLE_REDIS)
-    tests.push(testRedis(redisURL));
+    watch('Redis', () => testRedis(redisURL));
 
 if (!process.env.DISABLE_PSQL)
-    tests.push(testPsql(psqlURL));
+    watch('Postgres', () => testPsql(psqlURL));
 
 if (!process.env.DISABLE_RABBIT)
-    tests.push(testRabbit(rabbitURL));
-
-Promise.all(tests)
-    .then(() => {
-        console.info('All tests were successful.');
-        process.exit(0);
-    })
-    .catch(err => {
-        console.error(err);
-        process.exit(-1);
-    });
+    watch('RabbitMQ', () => testRabbit(rabbitURL));
