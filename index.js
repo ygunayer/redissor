@@ -2,6 +2,7 @@ const redisURL = process.env.REDIS_URL || 'redis://localhost:6379';
 const rabbitURL = process.env.RABBIT_URL || 'amqp://localhost';
 
 const psqlConfig = {
+    url: process.env.POSTGRES_URL,
     host: process.env.POSTGRES_HOST || 'localhost',
     username: process.env.POSTGRES_DB_USER || 'postgres',
     password: process.env.POSTGRES_DB_PASSWORD || 'postgres',

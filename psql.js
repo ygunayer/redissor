@@ -1,8 +1,9 @@
 const Sequelize = require('sequelize');
 
-async function test({host, username, password, database, port = 5432}) {
-    const db = new Sequelize({
+async function test({url = null, host, username, password, database, port = 5432}) {
+    const db = new Sequelize(url || {
         host,
+        port,
         username,
         password,
         database,
