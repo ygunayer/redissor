@@ -10,9 +10,12 @@ const psqlConfig = {
     port: isNaN(process.env.POSTGRES_DB_PORT) ? 5432 : parseInt(process.env.POSTGRES_DB_PORT),
 };
 
+const mongoUrl = process.env.MONGO_URL || 'mongodb://localhost:27017';
+
 const testRedis = require('./redis');
 const testPsql = require('./psql');
 const testRabbit = require('./rabbit');
+const testMongo = require('./mongo');
 
 async function watch(name, doTest, interval = 3000) {
     async function tick() {
@@ -37,3 +40,6 @@ if (!process.env.DISABLE_PSQL)
 
 if (!process.env.DISABLE_RABBIT)
     watch('RabbitMQ', () => testRabbit(rabbitURL));
+
+if (!process.env.DISABLE_MONGO)
+    watch('MongoDB', () => testMongo(mongoUrl));
